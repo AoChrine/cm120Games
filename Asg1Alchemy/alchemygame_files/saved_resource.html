@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://fiddle.jshell.net/chrineal/d9og1Lar/show/light/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+
+  
+  
+
+  
+  
+  
+
+  
+
+  <script type="text/javascript" src="./dummy.js"></script>
+
+  
+
+  
+
+  
+
+  
+    <link rel="stylesheet" type="text/css" href="./result-light.css">
+  
+
+  
+
+  <style type="text/css">
+    
+  </style>
+
+  <title>cm120asg1Final by chrineal</title>
+
+  
+    
+
+
+
+
+<script type="text/javascript">//<![CDATA[
+window.onload=function(){
+var canvas = document.getElementById('asg1canvas');
+var context = canvas.getContext('2d');
+
+// list of arrays to images
+var objects = new Array();
+objects.push('https://i.imgur.com/b4RGEpP.gif'); //0. bear
+objects.push('https://i.imgur.com/CMKtvkQ.jpg'); //1. gem
+objects.push('https://i.imgur.com/vdph4pd.png'); //2. snowball
+
+var colors = new Array();
+colors.push('https://i.imgur.com/VjEEraR.jpg'); //0. red
+colors.push('https://i.imgur.com/yrgjyDm.jpg'); //1. green
+colors.push('https://i.imgur.com/PnXWC85.jpg'); //2. blue
+
+var skins = new Array();
+skins.push('https://i.imgur.com/Iu4LuLf.jpg'); //0. greennunu
+skins.push('https://i.imgur.com/DbcvyBW.jpg'); //1. rednunu
+skins.push('https://i.imgur.com/ZmwaJy6.jpg'); //2. redtaric
+skins.push('https://i.imgur.com/QZhCe0L.jpg'); //3. redannie
+skins.push('https://i.imgur.com/GkMzeZa.jpg'); //4. greenannie
+skins.push('https://i.imgur.com/EIi12KN.jpg'); //5. greentaric
+skins.push('https://i.imgur.com/Hgih1lk.jpg'); //6. blueannie
+skins.push('https://i.imgur.com/ouK5kNy.jpg'); //7. bluenunu
+skins.push('https://i.imgur.com/y7c4sRn.jpg'); //8. bluetaric
+
+//move images
+var desPosition = {x:250, y: 200};
+var moveSpeed = 1;
+
+
+// image objects
+var reset = new Image();
+reset.X = 300;
+reset.Y = 350;
+reset.width = 100;
+reset.height = 100;
+
+var bear = new Image();
+bear.X = 0;
+bear.Y = 400;
+bear.startPosX = 0;
+bear.startPosY = 0;
+bear.width = 100;
+bear.height = 100;
+bear.src = objects[0];
+var bearDrag = false;
+
+var gems = new Image();
+gems.X = 110;
+gems.Y = 400;
+gems.width = 100;
+gems.height = 100;
+gems.startPosX = 0;
+gems.startPosY = 0;
+gems.src = objects[1];
+var gemsDrag = false;
+
+var snowball = new Image();
+snowball.X = 220;
+snowball.Y = 400;
+snowball.width = 100;
+snowball.height = 100;
+gems.startPosX = 0;
+gems.startPosY = 0;
+snowball.src = objects[2];
+var snowballDrag = false;
+
+
+var red = new Image();
+red.X = 500;
+red.Y = 0;
+red.width = 100;
+red.height = 100;
+red.startPosX = 500;
+red.startPosY = 400;
+red.src = colors[0];
+var redDrag = false;
+
+var green = new Image();
+green.X = 500;
+green.Y = 110;
+green.width = 100;
+green.height = 100;
+green.startPosX = 500;
+green.startPosY = 400;
+green.src = colors[1];
+var greenDrag = false;
+
+var blue = new Image();
+blue.X = 500;
+blue.Y = 220;
+blue.width = 100;
+blue.height = 100;
+blue.startPosX = 500;
+blue.startPosY = 400;
+blue.src = colors[2];
+var blueDrag = false;
+
+var redAnnie = new Image();
+redAnnie.X = -300;
+redAnnie.Y = -300;
+redAnnie.width = 200;
+redAnnie.height = 200;
+redAnnie.src = skins[3];
+
+var greenAnnie = new Image();
+greenAnnie.X = -300;
+greenAnnie.Y = -300;
+greenAnnie.width = 200;
+greenAnnie.height = 200;
+greenAnnie.src = skins[4];
+
+var blueAnnie = new Image();
+blueAnnie.X = -300;
+blueAnnie.Y = -300;
+blueAnnie.width = 200;
+blueAnnie.height = 200;
+blueAnnie.src = skins[6];
+
+
+var redTaric = new Image();
+redTaric.X = -300;
+redTaric.Y = -300;
+redTaric.width = 200;
+redTaric.height = 200;
+redTaric.src = skins[2];
+
+var greenTaric = new Image();
+greenTaric.X = -300;
+greenTaric.Y = -300;
+greenTaric.width = 200;
+greenTaric.height = 200;
+greenTaric.src = skins[5];
+
+var blueTaric = new Image();
+blueTaric.X = -300;
+blueTaric.Y = -300;
+blueTaric.width = 200;
+blueTaric.height = 200;
+blueTaric.src = skins[8];
+
+var redNunu = new Image();
+redNunu.X = -300;
+redNunu.Y = -300;
+redNunu.width = 200;
+redNunu.height = 200;
+redNunu.src = skins[1];
+
+var greenNunu = new Image();
+greenNunu.X = -300;
+greenNunu.Y = -300;
+greenNunu.width = 200;
+greenNunu.height = 200;
+greenNunu.src = skins[0];
+
+var blueNunu = new Image();
+blueNunu.X = -300;
+blueNunu.Y = -300;
+blueNunu.width = 200;
+blueNunu.height = 200;
+blueNunu.src = skins[7];
+
+
+var displayChamp = false;
+var textAtBeginning = 'First, click on a color -->'
+var textAtEnd = 'Then, click on an object below'
+
+
+function checkBounds(Image, e) {
+	if(e.clientX >= Image.X && e.clientX <= Image.X + Image.width && e.clientY >= Image.Y && e.clientY <= Image.Y + Image.height) {
+  	return true;
+  }
+}
+
+canvas.addEventListener('click', handleclick);
+canvas.addEventListener("mousemove", moveImg);
+canvas.addEventListener("mousedown", selectImg);
+canvas.addEventListener("mouseup", deselectImg);
+
+console.log('bearDrag:' +bearDrag);
+
+function selectImg(event) {
+	console.log(bearDrag);
+  console.log('mouseX:'+event.clientX);
+  console.log('bearX:'+bear.X)
+	if(Math.abs(event.clientX - bear.X) < 100 && Math.abs(event.clientY - bear.Y) < 	100) {
+  	bearDrag = true;
+  }else if(Math.abs(event.clientX - gems.X) < 100 && Math.abs(event.clientY - 			gems.Y) < 100) {
+  	gemsDrag = true;
+  }else if(Math.abs(event.clientX - snowball.X) < 100 && Math.abs(event.clientY - 	snowball.Y) < 	100) {
+  	snowballDrag = true;
+  }else if(Math.abs(event.clientX - red.X) < 100 && Math.abs(event.clientY - 				red.Y) < 100) {
+  	redDrag = true;
+  }else if(Math.abs(event.clientX - green.X) < 100 && Math.abs(event.clientY - 				green.Y) < 100) {
+  	greenDrag = true;
+  }else if(Math.abs(event.clientX - blue.X) < 100 && Math.abs(event.clientY - 				blue.Y) < 100) {
+  	blueDrag = true;
+  }
+}
+
+function moveImg(event) {
+	if(bearDrag) {
+  	console.log('bearDrag is:'+bearDrag);
+  	console.log('clientx:'+event.clientX);
+    console.log('bearx:'+ bear.X);
+  	bear.X = event.clientX - bear.width/2;
+    bear.Y = event.clientY - bear.height/2;
+  }else if(gemsDrag) {
+  	gems.X = event.clientX - gems.width/2;
+    gems.Y = event.clientY - gems.height/2;
+  }else if(snowballDrag) {
+  	snowball.X = event.clientX - snowball.width/2;
+    snowball.Y = event.clientY - snowball.height/2;
+  }else if(redDrag) {
+  	red.X = event.clientX - red.width/2;
+    red.Y = event.clientY - red.height/2;
+  }else if(greenDrag) {
+  	green.X = event.clientX - green.width/2;
+    green.Y = event.clientY - green.height/2;
+  }else if(blueDrag) {
+  	blue.X = event.clientX - blue.width/2;
+    blue.Y = event.clientY - blue.height/2;
+  }
+}
+
+function deselectImg(event) {
+	bearDrag = false;
+  gemsDrag = false;
+  snowballDrag = false;
+  redDrag = false;
+  greenDrag = false;
+  blueDrag = false;
+}
+
+
+//handle the mouse click
+function handleclick(e) {
+	
+	// check mouse click for the objects and colors
+	if(checkBounds(bear, e) == true) {
+  	bear.X = 0;
+    bear.Y = 0;
+    gems.X = 110;
+    gems.Y = 400;
+    snowball.X = 220;
+		snowball.Y = 400;
+    redAnnie.X = -300;
+    redAnnie.Y = -300;
+    greenAnnie.X = -300;
+    greenAnnie.Y = -300;
+    blueAnnie.X = -300;
+    blueAnnie.Y = -300;
+		redTaric.X = -300;
+    redTaric.Y = -300;
+    greenTaric.X = -300;
+    greenTaric.Y = -300;
+    blueTaric.X = -300;
+    blueTaric.Y = -300;
+   	redNunu.X = -300;
+    redNunu.Y = -300;
+    greenNunu.X = -300;
+    greenNunu.Y = -300;
+    blueNunu.X = -300;
+    blueNunu.Y = -300;
+  }else if(checkBounds(gems, e) == true) {
+  	gems.X = 0;
+    gems.Y = 0;
+    bear.X = 0;
+		bear.Y = 400;
+    snowball.X = 220;
+		snowball.Y = 400;
+    redAnnie.X = -300;
+    redAnnie.Y = -300;
+    greenAnnie.X = -300;
+    greenAnnie.Y = -300;
+    blueAnnie.X = -300;
+    blueAnnie.Y = -300;
+		redTaric.X = -300;
+    redTaric.Y = -300;
+    greenTaric.X = -300;
+    greenTaric.Y = -300;
+    blueTaric.X = -300;
+    blueTaric.Y = -300;
+   	redNunu.X = -300;
+    redNunu.Y = -300;
+    greenNunu.X = -300;
+    greenNunu.Y = -300;
+    blueNunu.X = -300;
+    blueNunu.Y = -300;
+  }else if(checkBounds(snowball, e) == true) {
+  	snowball.X = 0;
+    snowball.Y = 0;
+    bear.X = 0;
+		bear.Y = 400;
+    gems.X = 110;
+    gems.Y = 400;
+    redAnnie.X = -300;
+    redAnnie.Y = -300;
+    greenAnnie.X = -300;
+    greenAnnie.Y = -300;
+    blueAnnie.X = -300;
+    blueAnnie.Y = -300;
+		redTaric.X = -300;
+    redTaric.Y = -300;
+    greenTaric.X = -300;
+    greenTaric.Y = -300;
+    blueTaric.X = -300;
+    blueTaric.Y = -300;
+   	redNunu.X = -300;
+    redNunu.Y = -300;
+    greenNunu.X = -300;
+    greenNunu.Y = -300;
+    blueNunu.X = -300;
+    blueNunu.Y = -300;
+  }else if(checkBounds(red, e) == true) {
+  	red.X = 500;
+    red.Y = 400;
+    green.X = 500;
+		green.Y = 110;
+    blue.X = 500;
+		blue.Y = 220;
+    redAnnie.X = -300;
+    redAnnie.Y = -300;
+    greenAnnie.X = -300;
+    greenAnnie.Y = -300;
+    blueAnnie.X = -300;
+    blueAnnie.Y = -300;
+		redTaric.X = -300;
+    redTaric.Y = -300;
+    greenTaric.X = -300;
+    greenTaric.Y = -300;
+    blueTaric.X = -300;
+    blueTaric.Y = -300;
+   	redNunu.X = -300;
+    redNunu.Y = -300;
+    greenNunu.X = -300;
+    greenNunu.Y = -300;
+    blueNunu.X = -300;
+    blueNunu.Y = -300;
+  }else if(checkBounds(green, e) == true) {
+    red.X = 500;
+    red.Y = 0;
+    green.X = 500;
+		green.Y = 400;
+    blue.X = 500;
+		blue.Y = 220;
+    redAnnie.X = -300;
+    redAnnie.Y = -300;
+    greenAnnie.X = -300;
+    greenAnnie.Y = -300;
+    blueAnnie.X = -300;
+    blueAnnie.Y = -300;
+		redTaric.X = -300;
+    redTaric.Y = -300;
+    greenTaric.X = -300;
+    greenTaric.Y = -300;
+    blueTaric.X = -300;
+    blueTaric.Y = -300;
+   	redNunu.X = -300;
+    redNunu.Y = -300;
+    greenNunu.X = -300;
+    greenNunu.Y = -300;
+    blueNunu.X = -300;
+    blueNunu.Y = -300;
+  }else if(checkBounds(blue, e) == true) {
+    red.X = 500;
+    red.Y = 0;
+    green.X = 500;
+		green.Y = 110;
+    blue.X = 500;
+		blue.Y = 400;
+    redAnnie.X = -300;
+    redAnnie.Y = -300;
+    greenAnnie.X = -300;
+    greenAnnie.Y = -300;
+    blueAnnie.X = -300;
+    blueAnnie.Y = -300;
+		redTaric.X = -300;
+    redTaric.Y = -300;
+    greenTaric.X = -300;
+    greenTaric.Y = -300;
+    blueTaric.X = -300;
+    blueTaric.Y = -300;
+   	redNunu.X = -300;
+    redNunu.Y = -300;
+    greenNunu.X = -300;
+    greenNunu.Y = -300;
+    blueNunu.X = -300;
+    blueNunu.Y = -300;
+  }else if (checkBounds(reset, e) == true) {
+  	redAnnie.X = -300;
+    redAnnie.Y = -300;
+    greenAnnie.X = -300;
+    greenAnnie.Y = -300;
+    blueAnnie.X = -300;
+    blueAnnie.Y = -300;
+		redTaric.X = -300;
+    redTaric.Y = -300;
+    greenTaric.X = -300;
+    greenTaric.Y = -300;
+    blueTaric.X = -300;
+    blueTaric.Y = -300;
+   	redNunu.X = -300;
+    redNunu.Y = -300;
+    greenNunu.X = -300;
+    greenNunu.Y = -300;
+    blueNunu.X = -300;
+    blueNunu.Y = -300;
+  }
+}
+
+function resetAll() {
+	red.X = 500;
+  red.Y = 0;
+  green.X = 500;
+  green.Y = 110;
+  blue.X = 500;
+  blue.Y = 220;
+  bear.X = 0;
+  bear.Y = 400;
+  gems.X = 110;
+  gems.Y = 400;
+  snowball.X = 220;
+  snowball.Y = 400;
+}
+
+function draw() {
+ 
+	canvas.width = canvas.width;
+  
+  context.fillStyle = 'black';
+  context.fillRect(0,0,canvas.width,canvas.height);
+  
+  
+  // draw top pic1 location border
+  context.rect(0,0,100,100);
+  context.lineWidth = '3';
+  context.strokeStyle = 'white';
+  context.stroke();
+  
+  // draw bottom pic2 location border
+  context.rect(500,400,100,100);
+  context.stroke();
+  
+	context.drawImage(bear, bear.X, bear.Y, bear.width, bear.height);
+  context.drawImage(gems, gems.X, gems.Y, gems.width, gems.height);
+  context.drawImage(snowball, snowball.X, snowball.Y, snowball.width, 						snowball.height);
+  context.drawImage(red, red.X, red.Y, red.width, red.height);
+  context.drawImage(green, green.X, green.Y, green.width, green.height);
+  context.drawImage(blue, blue.X, blue.Y, blue.width, blue.height);
+  context.drawImage(redAnnie, redAnnie.X, redAnnie.Y, redAnnie.width, 						redAnnie.height);
+  context.drawImage(greenAnnie, greenAnnie.X, greenAnnie.Y, greenAnnie.width, 		greenAnnie.height);
+  context.drawImage(blueAnnie, blueAnnie.X, blueAnnie.Y, blueAnnie.width, 				blueAnnie.height);
+  context.drawImage(redTaric, redTaric.X, redTaric.Y, redTaric.width, 						redTaric.height);
+  context.drawImage(greenTaric, greenTaric.X, greenTaric.Y, greenTaric.width, 		greenTaric.height);
+  context.drawImage(blueTaric, blueTaric.X, blueTaric.Y, blueTaric.width, 				blueTaric.height);
+  context.drawImage(redNunu, redNunu.X, redNunu.Y, redNunu.width, 								redNunu.height);
+  context.drawImage(greenNunu, greenNunu.X, greenNunu.Y, greenNunu.width, 				greenNunu.height);
+  context.drawImage(blueNunu, blueNunu.X, blueNunu.Y, blueNunu.width, 						blueNunu.height);
+  
+  
+  context.font = '20px Verdana';
+  context.fillStyle = 'red';
+  context.fillText(textAtBeginning, 160,50);
+  context.fillText(textAtEnd, 60, 380);
+  //context.fillStyle = 'blue'
+  //context.fillText(MIX, 270, 350);
+
+}
+
+function update() {
+	if( (isNaN(red.Y) == true) || (isNaN(green.Y) == true) || (isNaN(blue.Y) == true) ) {
+  	resetAll();
+  }
+
+	if ((bearDrag == false) && (redDrag == false) && (greenDrag == false) && (blueDrag == false) && bear.Y != 400 && (red.Y != 0 || green.Y != 110 || blue.Y != 220)) {
+ 		if(Math.abs(bear.X-desPosition.x)<10 &&  Math.abs(bear.Y-desPosition.y)<10) {
+    	desPosition.x = 250;
+      desPosition.y = 200;
+      moveSpeed = 0;
+    }
+    //console.log('current:', red.Y);
+    moveImageForward(bear, {x:desPosition.x - bear.X, y:desPosition.y - bear.Y},               moveSpeed);
+    console.log('bear:'+ bear.Y);
+    console.log('red'+red.Y);
+    if(red.Y != 0) {
+   		 moveImageBackward(red, {x:red.X - desPosition.x, y: red.Y - desPosition.y}, 							moveSpeed);
+       console.log("red"+ red.X);
+   		 console.log("red"+ red.Y);
+    }else if(green.Y != 110) {
+    	 moveImageBackward(green, {x:green.X - desPosition.x, y: green.Y - 								 desPosition.y}, moveSpeed);
+       console.log('bear:'+bear.Y);
+       console.log("greenx"+ green.X);
+   		 console.log("greeny"+ green.Y);
+    }else if(blue.Y != 220) {
+    	 moveImageBackward(blue, {x:blue.X - desPosition.x, y:blue.Y - 										 desPosition.y}, moveSpeed);
+   		 console.log("blue"+ blue.Y);
+    }
+    
+    if(Math.abs(red.Y - 200) <= 10 && Math.abs(bear.Y - 200) <= 10 && 									Math.abs(red.Y - bear.Y) <= 20) {
+    	console.log(bear.Y);
+    	console.log(red.Y);
+    	redAnnie.X = 200;
+      redAnnie.Y = 150;
+      bear.X = 0;
+      bear.Y = 400;
+      red.X = 500;
+      red.Y = 0;
+      console.log('bear2:' + bear.Y);
+      console.log('red2:' +red.Y);
+    }else if(Math.abs(green.Y - 200) <= 10 && Math.abs(bear.Y - 200) <= 10 && 					Math.abs(green.Y - bear.Y) <= 20) {
+    	console.log(bear.Y);
+    	console.log(green.Y);
+    	greenAnnie.X = 200;
+      greenAnnie.Y = 150;
+      bear.X = 0;
+      bear.Y = 400;
+      green.X = 500;
+      green.Y = 110;
+      console.log('bear2:' + bear.Y);
+      console.log('green2:' +green.Y);
+    }else if(Math.abs(blue.Y - 200) <= 10 && Math.abs(bear.Y - 200) <= 10 && 					Math.abs(blue.Y - bear.Y) <= 20) {
+    	console.log(bear.Y);
+    	console.log(green.Y);
+    	blueAnnie.X = 200;
+      blueAnnie.Y = 150;
+      bear.X = 0;
+      bear.Y = 400;
+      blue.X = 500;
+      blue.Y = 220;
+      console.log('bear2:' + bear.Y);
+      console.log('blue2:' +green.Y);
+    }
+	}else if ((gemsDrag == false) && (redDrag == false) && (greenDrag == false) && (blueDrag == false) && gems.Y != 400 && (red.Y != 0 || green.Y != 110 || blue.Y != 220)) {
+ 		if(Math.abs(gems.X-desPosition.x)<10 &&  Math.abs(gems.Y-desPosition.y)<10) {
+    	desPosition.x = 250;
+      desPosition.y = 200;
+      moveSpeed = 0;
+    }
+    //console.log('current:', red.Y);
+    moveImageForward(gems, {x:desPosition.x - gems.X, y:desPosition.y - gems.Y},               moveSpeed);
+    console.log('gems:'+ gems.Y)
+    if(red.Y != 0) {
+   		 moveImageBackward(red, {x:red.X - desPosition.x, y: red.Y - desPosition.y}, 							moveSpeed);
+       console.log("red"+ red.X);
+   		 console.log("red"+ red.Y);
+    }else if(green.Y != 110) {
+    	 moveImageBackward(green, {x:green.X - desPosition.x, y: green.Y - 								 desPosition.y}, moveSpeed);
+       console.log('gems:'+bear.Y);
+       console.log("greenx"+ green.X);
+   		 console.log("greeny"+ green.Y);
+    }else if(blue.Y != 220) {
+    	 moveImageBackward(blue, {x:blue.X - desPosition.x, y:blue.Y - 										 desPosition.y}, moveSpeed);
+   		 console.log("blue"+ blue.Y);
+    }
+    
+    if(Math.abs(red.Y - 200) <= 10 && Math.abs(gems.Y - 200) <= 10 && 									Math.abs(red.Y - gems.Y) <= 20) {
+    	console.log(gems.Y);
+    	console.log(red.Y);
+    	redTaric.X = 200;
+      redTaric.Y = 150;
+      gems.X = 110;
+      gems.Y = 400;
+      red.X = 500;
+      red.Y = 0;
+      console.log('gems2:' + bear.Y);
+      console.log('red2:' +red.Y);
+    }else if(Math.abs(green.Y - 200) <= 10 && Math.abs(gems.Y - 200) <= 10 && 					Math.abs(green.Y - gems.Y) <= 20) {
+    	console.log(gems.Y);
+    	console.log(green.Y);
+    	greenTaric.X = 200;
+      greenTaric.Y = 150;
+      gems.X = 110;
+      gems.Y = 400;
+      green.X = 500;
+      green.Y = 110;
+      console.log('gems2:' + bear.Y);
+      console.log('green2:' +green.Y);
+    }else if(Math.abs(blue.Y - 200) <= 10 && Math.abs(gems.Y - 200) <= 10 && 					Math.abs(blue.Y - gems.Y) <= 20) {
+    	console.log(gems.Y);
+    	console.log(green.Y);
+    	blueTaric.X = 200;
+      blueTaric.Y = 150;
+      gems.X = 110;
+      gems.Y = 400;
+      blue.X = 500;
+      blue.Y = 220;
+      console.log('gems2:' + bear.Y);
+      console.log('blue2:' +green.Y);
+    }
+  }else if ((snowballDrag == false) && (redDrag == false) && (greenDrag == false) && (blueDrag == false) && snowball.Y != 400 && (red.Y != 0 || green.Y != 110 || blue.Y != 220)){
+ 		if(Math.abs(snowball.X-desPosition.x)<10 &&  Math.abs(snowball.Y-desPosition.y)<10) {
+    	desPosition.x = 250;
+      desPosition.y = 200;
+      moveSpeed = 0;
+    }
+    //console.log('current:', red.Y);
+    moveImageForward(snowball, {x:desPosition.x - snowball.X, y:desPosition.y - snowball.Y}, moveSpeed);
+    console.log('snowball:'+ snowball.Y)
+    if(red.Y != 0) {
+   		 moveImageBackward(red, {x:red.X - desPosition.x, y: red.Y - desPosition.y}, 							moveSpeed);
+       console.log("red"+ red.X);
+   		 console.log("red"+ red.Y);
+    }else if(green.Y != 110) {
+    	 moveImageBackward(green, {x:green.X - desPosition.x, y: green.Y - 								 desPosition.y}, moveSpeed);
+       console.log('gems:'+bear.Y);
+       console.log("greenx"+ green.X);
+   		 console.log("greeny"+ green.Y);
+    }else if(blue.Y != 220) {
+    	 moveImageBackward(blue, {x:blue.X - desPosition.x, y:blue.Y - 										 desPosition.y}, moveSpeed);
+   		 console.log("blue"+ blue.Y);
+    }
+    
+    if(Math.abs(red.Y - 200) <= 10 && Math.abs(snowball.Y - 200) <= 10 && 									Math.abs(red.Y - snowball.Y) <= 20) {
+    	console.log(snowball.Y);
+    	console.log(red.Y);
+    	redNunu.X = 200;
+      redNunu.Y = 150;
+      snowball.X = 220;
+      snowball.Y = 400;
+      red.X = 500;
+      red.Y = 0;
+      console.log('snowball2:' + bear.Y);
+      console.log('red2:' +red.Y);
+    }else if(Math.abs(green.Y - 200) <= 10 && Math.abs(snowball.Y - 200) <= 10 && 					Math.abs(green.Y - snowball.Y) <= 20) {
+    	console.log(snowball.Y);
+    	console.log(green.Y);
+    	greenNunu.X = 200;
+      greenNunu.Y = 150;
+      snowball.X = 220;
+      snowball.Y = 400;
+      green.X = 500;
+      green.Y = 110;
+      console.log('snowball2:' + bear.Y);
+      console.log('green2:' +green.Y);
+    }else if(Math.abs(blue.Y - 200) <= 10 && Math.abs(snowball.Y - 200) <= 10 && 					Math.abs(blue.Y - snowball.Y) <= 20) {
+    	console.log(snowball.Y);
+    	console.log(green.Y);
+    	blueNunu.X = 200;
+      blueNunu.Y = 150;
+      snowball.X = 220;
+      snowball.Y = 400;
+      blue.X = 500;
+      blue.Y = 220;
+      console.log('gems2:' + bear.Y);
+      console.log('blue2:' +green.Y);
+    }
+  }
+}
+
+function moveImageForward(Image, dir, spd) {
+ norm = {x:dir.x/(Math.sqrt(dir.x^2)+Math.sqrt(dir.y^2)), y:dir.y/((Math.sqrt(dir.x^2)+Math.sqrt(dir.y^2)))};
+ Image.X += norm.x*spd;
+ Image.Y += norm.y*spd;
+}
+
+function moveImageBackward(Image, dir, spd) {
+ norm = {x:dir.x/(Math.sqrt(dir.x^2)+Math.sqrt(dir.y^2)), y:dir.y/((Math.sqrt(dir.x^2)+Math.sqrt(dir.y^2)))};
+ Image.X -= norm.x*spd;
+ Image.Y -= norm.y*spd;
+}
+
+
+
+function game_loop() {
+	draw();
+  update();
+} 
+
+//setInterval(game_loop, 30);
+
+
+function init() {
+	setInterval(game_loop, 30);
+}
+
+init();
+
+
+
+
+}//]]> 
+
+</script>
+
+  
+</head>
+
+<body>
+  <canvas id="asg1canvas" width="600" height="500" style="border:5px solid #000000;">
+</canvas>
+  
+
+
+
+
+</body></html>

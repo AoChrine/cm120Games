@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://fiddle.jshell.net/chrineal/64084n2u/show/light/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+
+  
+  
+
+  
+  
+  
+
+  
+
+  <script type="text/javascript" src="./dummy.js"></script>
+
+  
+
+  
+
+  
+
+  
+    <link rel="stylesheet" type="text/css" href="./result-light.css">
+  
+
+  
+
+  <style type="text/css">
+    
+  </style>
+
+  <title>cm120asg2ER by chrineal</title>
+
+  
+    
+
+
+
+
+<script type="text/javascript">//<![CDATA[
+window.onload=function(){
+var canvas = document.getElementById('mygame');
+var ctx = canvas.getContext('2d');
+var dis = document.getElementById('score');
+
+var imageHolder = new Array();
+imageHolder.push('https://i.imgur.com/1iFRMnh.jpg') // background
+imageHolder.push('https://i.imgur.com/hPr4nbk.png') // shuriken
+imageHolder.push('https://i.imgur.com/QJHbiln.png') // avatar sprite
+//imageHolder.push('https://i.imgur.com/chPnzWq.png') // shuriken sprite
+
+var background = new Image();
+background.X = 0;
+background.Y = 0;
+background.width = 1100;
+background.height = 800;
+background.src = imageHolder[0];
+
+var score = 0;
+
+
+var shuriken = new Image();
+shuriken.src = imageHolder[1];
+
+var avatar = new spriteSheet(imageHolder[2], 550, 750, 50, 45, 10, 3);
+var keys= [];
+
+var particlesArr = new Array();
+
+
+function spriteSheet(url, x, y, frameWidth, frameHeight, frameSpeed,endFrame) {
+	var image = new Image();
+  var frameNumber;
+  var currentFrame = 0;
+  var counter = 0;
+  image.src = url;
+  image.onload = function() {
+  		frameNumber = Math.floor(image.width / frameWidth);
+  }
+  
+  this.x = x;
+  this.y = y;
+  this.width = 20;
+  this.height = 20;
+  this.xSpd = 0;
+  this.ySpd = 0;
+  this.alive = true;
+  this.update = function() {
+  	if(avatar.y >= 750) {
+    	avatar.y = 750;
+    }
+    if(avatar.y <= 0) {
+    	avatar.y = 0;
+    }
+    if(avatar.x <= 0) {
+    	avatar.x = 0;
+    }
+    if(avatar.x >= 1050) {
+    	avatar.x = 1050;
+    }
+    // if press w
+    if(keys[87]) {
+    	avatar.y -= avatar.height/3;
+    }
+    // if press a
+    if(keys[65]) {
+    	avatar.x -= avatar.width/3;
+    }
+    // if press s
+    if(keys[83]) {
+    	avatar.y += avatar.height/3;
+    }
+    // if press d
+    if(keys[68]) {
+    	avatar.x += avatar.width/3;
+    }
+    
+  	if(counter == (frameSpeed - 1)) {
+  		currentFrame = (currentFrame + 1) % endFrame;
+  	}
+    	counter = (counter + 1) % frameSpeed;
+  };
+  
+  this.draw = function(x,y) {
+  	var row = Math.floor(currentFrame / frameNumber);
+    var col = Math.floor(currentFrame % frameNumber);
+    ctx.drawImage(image, col*frameWidth, row*frameHeight, frameWidth, frameHeight, this.x, this.y, frameWidth, frameHeight);
+  }
+}
+
+function particles(x, y, spd, lifetime) {
+	this.x = x;
+  this.y = y;
+  this.width = Math.random()*20+10;
+  this.height = this.width+30;
+  this.spd = spd;
+  this.lifetime = lifetime;
+  
+  this.draw = function() {
+  console.log(particlesArr[0].x);
+  console.log(particlesArr[0].y);
+   for(var itor = 0; itor < particlesArr.length; itor ++){
+  	var par = particlesArr[itor];
+    ctx.drawImage(shuriken, Math.floor(par.x), Math.floor(par.y), Math.floor(par.width), par.height);
+   }
+	}
+  
+  this.update = function() {
+  	for(var itor = 0; itor < particlesArr.length; itor++) {
+  			if(particlesArr[itor].lifetime > 0 || particlesArr[itor].y < canvas.height) {
+    			particlesArr[itor].y += -particlesArr[itor].spd*.3*Math.random()*.1;
+      		particlesArr[itor].lifetime--;
+    		}else{
+    			// reset par
+      		particlesArr[itor].y = 0;
+      		particlesArr[itor].x = Math.random()*canvas.width;
+    		}
+    }
+  }
+}
+
+function particle_system(numParticles) {
+	for(var itor = 0; itor < numParticles; itor++) {
+  	particlesArr.push(new particles(Math.random()*canvas.width, 0, -15+Math.random()*10, Math.random()*10));
+  }
+}
+
+particle_system(25);
+
+function draw() {
+	canvas.width = canvas.width;
+  ctx.drawImage(background, background.X,background.Y, background.width, background.height);
+  ctx.font = '20px Arial';
+  ctx.fillStyle = 'red';
+  ctx.fillText("WASD to move", 50, 50);
+  if(avatar.alive == 1) {
+  	if(score < 99999) {
+    	score++;
+    }
+  }
+  dis.innerHTML = "Distance: " + score;
+  dis.style.color = 'Black';
+  dis.style.fontSize = 'large';
+  //document.getElementById('score').innerHTML = "Distance: " + score;
+
+  for(var itor = 0; itor < particlesArr.length; itor++) {
+  	particlesArr[itor].draw();
+  }
+  
+  avatar.draw();
+  
+  if(avatar.alive == 0) {
+  	ctx.font = "30px Arial";
+    ctx.fillStyle = 'red'
+    ctx.textAlign = 'center'
+    ctx.fillText("Distance: " + score, canvas.width/2, canvas.height/2-100);
+  	ctx.fillText("Press Space to Restart", canvas.width/2, canvas.height/2);
+  }
+ 	
+}
+
+
+function update() {
+	if(avatar.alive == 0){
+  	if(keys[32]) {
+    	for(var itor = 0; itor < particlesArr.length; itor++) {
+      	particlesArr[itor].y = 0;
+      }
+      score = 0;
+      avatar.x = 550;
+      avatar.y = 750;
+      avatar.alive = true;
+    }
+	}
+
+	if(avatar.alive == 1) {
+  	for(var itor = 0; itor < particlesArr.length; itor++) {
+  		particlesArr[itor].update();
+  	}
+	}
+	
+  if(avatar.alive == 1){
+  	avatar.update();
+  }
+  
+  for(var itor = 0; itor < particlesArr.length; itor++) {
+  	if (particlesArr[itor].x < avatar.x + avatar.width && particlesArr[itor].x + particlesArr[itor].width > avatar.x && particlesArr[itor].y < avatar.y + avatar.height && particlesArr[itor].y + particlesArr[itor].height > avatar.y) {
+    	avatar.alive = false;
+    	console.log('char y is at:', avatar.y)
+    	console.log('collision detected');
+    }
+  }
+  
+  
+}
+
+
+
+function game_loop() {
+	update();
+  draw();
+ // window.requestAnimationFrame(game_loop);
+}
+
+setInterval(game_loop, 10);
+document.onkeydown = document.onkeyup = function(e) {
+	keys[e.keyCode] = e.type === "keydown";
+};
+}//]]> 
+
+</script>
+
+  
+</head>
+
+<body>
+  <canvas id="mygame" width="1100" height="800">
+</canvas>
+<p id="score" style="color: black; font-size: large;">Distance: 148</p>
+  
+
+
+
+
+</body></html>
